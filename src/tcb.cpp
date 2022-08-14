@@ -39,3 +39,10 @@ int TCB::exit() {
     }
     return -1;
 }
+
+int TCB::start() {
+    if(this->state != CREATED) return -1;
+    this->state = READY;
+    if (this->id != 0) { Scheduler::put(this); }
+    return 0;
+}

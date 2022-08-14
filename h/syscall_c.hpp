@@ -14,4 +14,6 @@ int thread_exit();
 
 void thread_dispatch();
 
+int thread_start(thread_t);
+
 #endif //SYSCALL_C_H

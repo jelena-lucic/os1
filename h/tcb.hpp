@@ -17,13 +17,13 @@ public:
 
     uint64 getTimeSlice() const { return timeSlice; }
 
+    int start();
+
     using Body = void (*)(void*);
 
     using Arg = void*;
 
     static TCB *createThread(Body body, Arg arg, uint64* stack);
-
-    static void yield();
 
     static TCB *running;
 
@@ -37,9 +37,8 @@ private:
                     }),
             timeSlice(timeSlice)
     {
-        if (body != nullptr) { Scheduler::put(this); }
         this->id = this->ID++;
-        this->state = READY;
+        this->state = CREATED;
     }
 
     static uint64 ID;

@@ -9,12 +9,14 @@ int main() {
 
     printString("MAIN START\n");
     TCB::running = TCB::createThread(nullptr, nullptr, nullptr);
+    TCB::running->start();
 
     Riscv::w_stvec((uint64) &Riscv::supervisorTrap);
     Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
 
     thread_t handle;
     thread_create(&handle, userMain, nullptr);
+    thread_start(handle);
 
     while(!handle->isFinished()) {
         thread_dispatch();

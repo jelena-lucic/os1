@@ -40,3 +40,13 @@ void thread_dispatch() {
     Riscv::w_a0(0x13);
     __asm__ volatile ("ecall");
 }
+
+int thread_start(thread_t thread) {
+    Riscv::w_a1((uint64)thread);
+    Riscv::w_a0(0x14);
+    __asm__ volatile ("ecall");
+
+    volatile long a0;
+    __asm__ volatile ("mv %0, a0" : "=r"(a0));
+    return a0;
+}

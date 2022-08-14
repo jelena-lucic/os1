@@ -40,6 +40,14 @@ void Riscv::handleSupervisorTrap() {
         else if(a0 == 0x13) { // thread_dispatch
             TCB::dispatch();
         }
+        else if(a0 == 0x14) {
+            thread_t thread = (thread_t)a1;
+            if(!thread) w_a0(-1);
+            else {
+                a0 = thread->start();
+                w_a0(a0);
+            }
+        }
 
         w_sstatus(sstatus); // restauracija statusnog registra
         w_sepc(sepc); // restauracija pc registra
