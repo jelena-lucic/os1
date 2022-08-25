@@ -1,0 +1,500 @@
+GAS LISTING /tmp/ccKQwasl.s 			page 1
+
+
+   1              		.file	"printingK.cpp"
+   2              		.option pic
+   3              		.option norelax
+   4              		.text
+   5              	.Ltext0:
+   6              		.align	2
+   7              		.globl	_Z12printStringKPKc
+   9              	_Z12printStringKPKc:
+  10              	.LFB0:
+  11              		.file 1 "test/printingK.cpp"
+   1:test/printingK.cpp **** //
+   2:test/printingK.cpp **** // Created by os on 5/18/22.
+   3:test/printingK.cpp **** //
+   4:test/printingK.cpp **** 
+   5:test/printingK.cpp **** #include "printingK.hpp"
+   6:test/printingK.cpp **** #include "../lib/console.h"
+   7:test/printingK.cpp **** 
+   8:test/printingK.cpp **** uint64 lockPrintK = 0;
+   9:test/printingK.cpp **** 
+  10:test/printingK.cpp **** #define LOCKK() while(copy_and_swap(lockPrintK, 0, 1))
+  11:test/printingK.cpp **** #define UNLOCKK() while(copy_and_swap(lockPrintK, 1, 0))
+  12:test/printingK.cpp **** 
+  13:test/printingK.cpp **** void printStringK(char const *string)
+  14:test/printingK.cpp **** {
+  12              		.loc 1 14 1
+  13              		.cfi_startproc
+  14              	.LVL0:
+  15 0000 130101FE 		addi	sp,sp,-32
+  16              		.cfi_def_cfa_offset 32
+  17 0004 233C1100 		sd	ra,24(sp)
+  18 0008 23388100 		sd	s0,16(sp)
+  19 000c 23349100 		sd	s1,8(sp)
+  20              		.cfi_offset 1, -8
+  21              		.cfi_offset 8, -16
+  22              		.cfi_offset 9, -24
+  23 0010 13040102 		addi	s0,sp,32
+  24              		.cfi_def_cfa 8, 0
+  25 0014 93040500 		mv	s1,a0
+  26              	.LVL1:
+  27              	.L2:
+  15:test/printingK.cpp ****     LOCKK();
+  28              		.loc 1 15 5
+  29              		.loc 1 15 5
+  30 0018 13061000 		li	a2,1
+  31 001c 93050000 		li	a1,0
+  32 0020 17050000 		lla	a0,.LANCHOR0
+  32      13050500 
+  33 0028 97000000 		call	copy_and_swap@plt
+  33      E7800000 
+  34              	.LVL2:
+  35 0030 E31405FE 		bnez	a0,.L2
+  36              	.L4:
+  16:test/printingK.cpp ****     while (*string != '\0')
+  37              		.loc 1 16 5
+  38              		.loc 1 16 20
+  39              		.loc 1 16 12 is_stmt 0
+  40 0034 03C50400 		lbu	a0,0(s1)
+GAS LISTING /tmp/ccKQwasl.s 			page 2
+
+
+  41              		.loc 1 16 20
+  42 0038 630A0500 		beqz	a0,.L3
+  17:test/printingK.cpp ****     {
+  18:test/printingK.cpp ****         __putc(*string);
+  43              		.loc 1 18 9 is_stmt 1
+  44              		.loc 1 18 15 is_stmt 0
+  45 003c 97000000 		call	__putc@plt
+  45      E7800000 
+  46              	.LVL3:
+  19:test/printingK.cpp ****         string++;
+  47              		.loc 1 19 9 is_stmt 1
+  48              		.loc 1 19 15 is_stmt 0
+  49 0044 93841400 		addi	s1,s1,1
+  50              	.LVL4:
+  16:test/printingK.cpp ****     while (*string != '\0')
+  51              		.loc 1 16 5
+  52 0048 6FF0DFFE 		j	.L4
+  53              	.L3:
+  20:test/printingK.cpp ****     }
+  21:test/printingK.cpp ****     UNLOCKK();
+  54              		.loc 1 21 5 is_stmt 1
+  55              		.loc 1 21 5
+  56 004c 13060000 		li	a2,0
+  57 0050 93051000 		li	a1,1
+  58 0054 17050000 		lla	a0,.LANCHOR0
+  58      13050500 
+  59 005c 97000000 		call	copy_and_swap@plt
+  59      E7800000 
+  60              	.LVL5:
+  61 0064 E31405FE 		bnez	a0,.L3
+  22:test/printingK.cpp **** }
+  62              		.loc 1 22 1 is_stmt 0
+  63 0068 83308101 		ld	ra,24(sp)
+  64              		.cfi_restore 1
+  65 006c 03340101 		ld	s0,16(sp)
+  66              		.cfi_restore 8
+  67              		.cfi_def_cfa 2, 32
+  68 0070 83348100 		ld	s1,8(sp)
+  69              		.cfi_restore 9
+  70              	.LVL6:
+  71 0074 13010102 		addi	sp,sp,32
+  72              		.cfi_def_cfa_offset 0
+  73 0078 67800000 		jr	ra
+  74              		.cfi_endproc
+  75              	.LFE0:
+  77              		.align	2
+  78              		.globl	_Z9printIntKiii
+  80              	_Z9printIntKiii:
+  81              	.LFB1:
+  23:test/printingK.cpp **** 
+  24:test/printingK.cpp **** char digitsK[] = "0123456789ABCDEF";
+  25:test/printingK.cpp **** 
+  26:test/printingK.cpp **** void printIntK(int xx, int base, int sgn)
+  27:test/printingK.cpp **** {
+  82              		.loc 1 27 1 is_stmt 1
+  83              		.cfi_startproc
+  84              	.LVL7:
+GAS LISTING /tmp/ccKQwasl.s 			page 3
+
+
+  85 007c 130101FC 		addi	sp,sp,-64
+  86              		.cfi_def_cfa_offset 64
+  87 0080 233C1102 		sd	ra,56(sp)
+  88 0084 23388102 		sd	s0,48(sp)
+  89 0088 23349102 		sd	s1,40(sp)
+  90 008c 23302103 		sd	s2,32(sp)
+  91 0090 233C3101 		sd	s3,24(sp)
+  92              		.cfi_offset 1, -8
+  93              		.cfi_offset 8, -16
+  94              		.cfi_offset 9, -24
+  95              		.cfi_offset 18, -32
+  96              		.cfi_offset 19, -40
+  97 0094 13040104 		addi	s0,sp,64
+  98              		.cfi_def_cfa 8, 0
+  99 0098 93040500 		mv	s1,a0
+ 100 009c 13890500 		mv	s2,a1
+ 101 00a0 93090600 		mv	s3,a2
+ 102              	.LVL8:
+ 103              	.L7:
+  28:test/printingK.cpp ****     LOCKK();
+ 104              		.loc 1 28 5
+ 105              		.loc 1 28 5
+ 106 00a4 13061000 		li	a2,1
+ 107 00a8 93050000 		li	a1,0
+ 108 00ac 17050000 		lla	a0,.LANCHOR0
+ 108      13050500 
+ 109 00b4 97000000 		call	copy_and_swap@plt
+ 109      E7800000 
+ 110              	.LVL9:
+ 111 00bc E31405FE 		bnez	a0,.L7
+  29:test/printingK.cpp ****     char buf[16];
+ 112              		.loc 1 29 5
+  30:test/printingK.cpp ****     int i, neg;
+ 113              		.loc 1 30 5
+  31:test/printingK.cpp ****     uint64 x;
+ 114              		.loc 1 31 5
+  32:test/printingK.cpp **** 
+  33:test/printingK.cpp ****     neg = 0;
+ 115              		.loc 1 33 5
+ 116              	.LVL10:
+  34:test/printingK.cpp ****     if(sgn && xx < 0){
+ 117              		.loc 1 34 5
+ 118 00c0 63840900 		beqz	s3,.L8
+ 119              		.loc 1 34 12 is_stmt 0 discriminator 1
+ 120 00c4 63CE0406 		bltz	s1,.L15
+ 121              	.L8:
+  35:test/printingK.cpp ****         neg = 1;
+  36:test/printingK.cpp ****         x = -xx;
+  37:test/printingK.cpp ****     } else {
+  38:test/printingK.cpp ****         x = xx;
+ 122              		.loc 1 38 9 is_stmt 1
+ 123              		.loc 1 38 11 is_stmt 0
+ 124 00c8 13850400 		mv	a0,s1
+ 125              	.LVL11:
+  33:test/printingK.cpp ****     if(sgn && xx < 0){
+ 126              		.loc 1 33 9
+ 127 00cc 13060000 		li	a2,0
+GAS LISTING /tmp/ccKQwasl.s 			page 4
+
+
+ 128              	.LVL12:
+ 129              	.L9:
+  39:test/printingK.cpp ****     }
+  40:test/printingK.cpp **** 
+  41:test/printingK.cpp ****     i = 0;
+ 130              		.loc 1 41 5 is_stmt 1
+ 131              		.loc 1 41 7 is_stmt 0
+ 132 00d0 93040000 		li	s1,0
+ 133              	.LVL13:
+ 134              	.L10:
+  42:test/printingK.cpp ****     do{
+ 135              		.loc 1 42 5 is_stmt 1
+  43:test/printingK.cpp ****         buf[i++] = digitsK[x % base];
+ 136              		.loc 1 43 9
+ 137              		.loc 1 43 30 is_stmt 0
+ 138 00d4 B3762503 		remu	a3,a0,s2
+ 139 00d8 13870400 		mv	a4,s1
+ 140              		.loc 1 43 14
+ 141 00dc 9B841400 		addiw	s1,s1,1
+ 142              	.LVL14:
+ 143              		.loc 1 43 36
+ 144 00e0 97070000 		lla	a5,.LANCHOR1
+ 144      93870700 
+ 145 00e8 B387D700 		add	a5,a5,a3
+ 146 00ec 83C60700 		lbu	a3,0(a5)
+ 147              		.loc 1 43 18
+ 148 00f0 930704FD 		addi	a5,s0,-48
+ 149 00f4 B387E700 		add	a5,a5,a4
+ 150 00f8 2388D7FE 		sb	a3,-16(a5)
+  44:test/printingK.cpp ****     }while((x /= base) != 0);
+ 151              		.loc 1 44 24 is_stmt 1
+ 152 00fc 93070500 		mv	a5,a0
+ 153              		.loc 1 44 15 is_stmt 0
+ 154 0100 33552503 		divu	a0,a0,s2
+ 155              	.LVL15:
+ 156              		.loc 1 44 24
+ 157 0104 E3F827FD 		bleu	s2,a5,.L10
+  45:test/printingK.cpp ****     if(neg)
+ 158              		.loc 1 45 5 is_stmt 1
+ 159 0108 630C0600 		beqz	a2,.L13
+  46:test/printingK.cpp ****         buf[i++] = '-';
+ 160              		.loc 1 46 9
+ 161              	.LVL16:
+ 162              		.loc 1 46 18 is_stmt 0
+ 163 010c 930704FD 		addi	a5,s0,-48
+ 164 0110 B3849700 		add	s1,a5,s1
+ 165 0114 9307D002 		li	a5,45
+ 166 0118 2388F4FE 		sb	a5,-16(s1)
+ 167              		.loc 1 46 14
+ 168 011c 9B042700 		addiw	s1,a4,2
+ 169              	.LVL17:
+ 170              	.L13:
+  47:test/printingK.cpp **** 
+  48:test/printingK.cpp ****     while(--i >= 0)
+ 171              		.loc 1 48 5 is_stmt 1
+ 172              		.loc 1 48 15
+ 173 0120 9B84F4FF 		addiw	s1,s1,-1
+GAS LISTING /tmp/ccKQwasl.s 			page 5
+
+
+ 174              	.LVL18:
+ 175 0124 63C40402 		bltz	s1,.L12
+  49:test/printingK.cpp ****         __putc(buf[i]);
+ 176              		.loc 1 49 9
+ 177              		.loc 1 49 15 is_stmt 0
+ 178 0128 930704FD 		addi	a5,s0,-48
+ 179 012c B3879700 		add	a5,a5,s1
+ 180 0130 03C507FF 		lbu	a0,-16(a5)
+ 181 0134 97000000 		call	__putc@plt
+ 181      E7800000 
+ 182              	.LVL19:
+ 183 013c 6FF05FFE 		j	.L13
+ 184              	.LVL20:
+ 185              	.L15:
+  35:test/printingK.cpp ****         x = -xx;
+ 186              		.loc 1 35 9 is_stmt 1
+  36:test/printingK.cpp ****     } else {
+ 187              		.loc 1 36 9
+  36:test/printingK.cpp ****     } else {
+ 188              		.loc 1 36 13 is_stmt 0
+ 189 0140 3B059040 		negw	a0,s1
+ 190              	.LVL21:
+  35:test/printingK.cpp ****         x = -xx;
+ 191              		.loc 1 35 13
+ 192 0144 13061000 		li	a2,1
+  36:test/printingK.cpp ****     } else {
+ 193              		.loc 1 36 11
+ 194 0148 6FF09FF8 		j	.L9
+ 195              	.LVL22:
+ 196              	.L12:
+  50:test/printingK.cpp **** 
+  51:test/printingK.cpp ****     UNLOCKK();
+ 197              		.loc 1 51 5 is_stmt 1
+ 198              		.loc 1 51 5
+ 199 014c 13060000 		li	a2,0
+ 200 0150 93051000 		li	a1,1
+ 201 0154 17050000 		lla	a0,.LANCHOR0
+ 201      13050500 
+ 202 015c 97000000 		call	copy_and_swap@plt
+ 202      E7800000 
+ 203              	.LVL23:
+ 204 0164 E31405FE 		bnez	a0,.L12
+  52:test/printingK.cpp **** }...
+ 205              		.loc 1 52 1 is_stmt 0
+ 206 0168 83308103 		ld	ra,56(sp)
+ 207              		.cfi_restore 1
+ 208 016c 03340103 		ld	s0,48(sp)
+ 209              		.cfi_restore 8
+ 210              		.cfi_def_cfa 2, 64
+ 211 0170 83348102 		ld	s1,40(sp)
+ 212              		.cfi_restore 9
+ 213 0174 03390102 		ld	s2,32(sp)
+ 214              		.cfi_restore 18
+ 215 0178 83398101 		ld	s3,24(sp)
+ 216              		.cfi_restore 19
+ 217 017c 13010104 		addi	sp,sp,64
+ 218              		.cfi_def_cfa_offset 0
+GAS LISTING /tmp/ccKQwasl.s 			page 6
+
+
+ 219 0180 67800000 		jr	ra
+ 220              		.cfi_endproc
+ 221              	.LFE1:
+ 223              		.globl	digitsK
+ 224              		.globl	lockPrintK
+ 225              		.data
+ 226              		.align	3
+ 227              		.set	.LANCHOR1,. + 0
+ 230              	digitsK:
+ 231 0000 30313233 		.string	"0123456789ABCDEF"
+ 231      34353637 
+ 231      38394142 
+ 231      43444546 
+ 231      00
+ 232              		.bss
+ 233              		.align	3
+ 234              		.set	.LANCHOR0,. + 0
+ 237              	lockPrintK:
+ 238 0000 00000000 		.zero	8
+ 238      00000000 
+ 239              		.text
+ 240              	.Letext0:
+ 241              		.file 2 "test/printingK.hpp"
+ 242              		.file 3 "test/../lib/console.h"
+GAS LISTING /tmp/ccKQwasl.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 printingK.cpp
+     /tmp/ccKQwasl.s:9      .text:0000000000000000 _Z12printStringKPKc
+     /tmp/ccKQwasl.s:13     .text:0000000000000000 .L0 
+     /tmp/ccKQwasl.s:15     .text:0000000000000000 .L0 
+     /tmp/ccKQwasl.s:16     .text:0000000000000004 .L0 
+     /tmp/ccKQwasl.s:20     .text:0000000000000010 .L0 
+     /tmp/ccKQwasl.s:21     .text:0000000000000010 .L0 
+     /tmp/ccKQwasl.s:22     .text:0000000000000010 .L0 
+     /tmp/ccKQwasl.s:24     .text:0000000000000014 .L0 
+     /tmp/ccKQwasl.s:29     .text:0000000000000018 .L0 
+     /tmp/ccKQwasl.s:30     .text:0000000000000018 .L0 
+     /tmp/ccKQwasl.s:38     .text:0000000000000034 .L0 
+     /tmp/ccKQwasl.s:39     .text:0000000000000034 .L0 
+     /tmp/ccKQwasl.s:40     .text:0000000000000034 .L0 
+     /tmp/ccKQwasl.s:42     .text:0000000000000038 .L0 
+     /tmp/ccKQwasl.s:44     .text:000000000000003c .L0 
+     /tmp/ccKQwasl.s:45     .text:000000000000003c .L0 
+     /tmp/ccKQwasl.s:48     .text:0000000000000044 .L0 
+     /tmp/ccKQwasl.s:49     .text:0000000000000044 .L0 
+     /tmp/ccKQwasl.s:52     .text:0000000000000048 .L0 
+     /tmp/ccKQwasl.s:55     .text:000000000000004c .L0 
+     /tmp/ccKQwasl.s:56     .text:000000000000004c .L0 
+     /tmp/ccKQwasl.s:63     .text:0000000000000068 .L0 
+     /tmp/ccKQwasl.s:64     .text:000000000000006c .L0 
+     /tmp/ccKQwasl.s:66     .text:0000000000000070 .L0 
+     /tmp/ccKQwasl.s:67     .text:0000000000000070 .L0 
+     /tmp/ccKQwasl.s:69     .text:0000000000000074 .L0 
+     /tmp/ccKQwasl.s:72     .text:0000000000000078 .L0 
+     /tmp/ccKQwasl.s:74     .text:000000000000007c .L0 
+     /tmp/ccKQwasl.s:80     .text:000000000000007c _Z9printIntKiii
+     /tmp/ccKQwasl.s:83     .text:000000000000007c .L0 
+     /tmp/ccKQwasl.s:85     .text:000000000000007c .L0 
+     /tmp/ccKQwasl.s:86     .text:0000000000000080 .L0 
+     /tmp/ccKQwasl.s:92     .text:0000000000000094 .L0 
+     /tmp/ccKQwasl.s:93     .text:0000000000000094 .L0 
+     /tmp/ccKQwasl.s:94     .text:0000000000000094 .L0 
+     /tmp/ccKQwasl.s:95     .text:0000000000000094 .L0 
+     /tmp/ccKQwasl.s:96     .text:0000000000000094 .L0 
+     /tmp/ccKQwasl.s:98     .text:0000000000000098 .L0 
+     /tmp/ccKQwasl.s:105    .text:00000000000000a4 .L0 
+     /tmp/ccKQwasl.s:106    .text:00000000000000a4 .L0 
+     /tmp/ccKQwasl.s:113    .text:00000000000000c0 .L0 
+     /tmp/ccKQwasl.s:114    .text:00000000000000c0 .L0 
+     /tmp/ccKQwasl.s:115    .text:00000000000000c0 .L0 
+     /tmp/ccKQwasl.s:117    .text:00000000000000c0 .L0 
+     /tmp/ccKQwasl.s:118    .text:00000000000000c0 .L0 
+     /tmp/ccKQwasl.s:120    .text:00000000000000c4 .L0 
+     /tmp/ccKQwasl.s:123    .text:00000000000000c8 .L0 
+     /tmp/ccKQwasl.s:124    .text:00000000000000c8 .L0 
+     /tmp/ccKQwasl.s:127    .text:00000000000000cc .L0 
+     /tmp/ccKQwasl.s:131    .text:00000000000000d0 .L0 
+     /tmp/ccKQwasl.s:132    .text:00000000000000d0 .L0 
+     /tmp/ccKQwasl.s:136    .text:00000000000000d4 .L0 
+     /tmp/ccKQwasl.s:137    .text:00000000000000d4 .L0 
+     /tmp/ccKQwasl.s:138    .text:00000000000000d4 .L0 
+     /tmp/ccKQwasl.s:141    .text:00000000000000dc .L0 
+GAS LISTING /tmp/ccKQwasl.s 			page 8
+
+
+     /tmp/ccKQwasl.s:144    .text:00000000000000e0 .L0 
+     /tmp/ccKQwasl.s:148    .text:00000000000000f0 .L0 
+     /tmp/ccKQwasl.s:152    .text:00000000000000fc .L0 
+     /tmp/ccKQwasl.s:154    .text:0000000000000100 .L0 
+     /tmp/ccKQwasl.s:157    .text:0000000000000104 .L0 
+     /tmp/ccKQwasl.s:159    .text:0000000000000108 .L0 
+     /tmp/ccKQwasl.s:162    .text:000000000000010c .L0 
+     /tmp/ccKQwasl.s:163    .text:000000000000010c .L0 
+     /tmp/ccKQwasl.s:168    .text:000000000000011c .L0 
+     /tmp/ccKQwasl.s:172    .text:0000000000000120 .L0 
+     /tmp/ccKQwasl.s:173    .text:0000000000000120 .L0 
+     /tmp/ccKQwasl.s:177    .text:0000000000000128 .L0 
+     /tmp/ccKQwasl.s:178    .text:0000000000000128 .L0 
+     /tmp/ccKQwasl.s:187    .text:0000000000000140 .L0 
+     /tmp/ccKQwasl.s:188    .text:0000000000000140 .L0 
+     /tmp/ccKQwasl.s:189    .text:0000000000000140 .L0 
+     /tmp/ccKQwasl.s:192    .text:0000000000000144 .L0 
+     /tmp/ccKQwasl.s:194    .text:0000000000000148 .L0 
+     /tmp/ccKQwasl.s:198    .text:000000000000014c .L0 
+     /tmp/ccKQwasl.s:199    .text:000000000000014c .L0 
+     /tmp/ccKQwasl.s:206    .text:0000000000000168 .L0 
+     /tmp/ccKQwasl.s:207    .text:000000000000016c .L0 
+     /tmp/ccKQwasl.s:209    .text:0000000000000170 .L0 
+     /tmp/ccKQwasl.s:210    .text:0000000000000170 .L0 
+     /tmp/ccKQwasl.s:212    .text:0000000000000174 .L0 
+     /tmp/ccKQwasl.s:214    .text:0000000000000178 .L0 
+     /tmp/ccKQwasl.s:216    .text:000000000000017c .L0 
+     /tmp/ccKQwasl.s:218    .text:0000000000000180 .L0 
+     /tmp/ccKQwasl.s:220    .text:0000000000000184 .L0 
+     /tmp/ccKQwasl.s:230    .data:0000000000000000 digitsK
+     /tmp/ccKQwasl.s:237    .bss:0000000000000000 lockPrintK
+     /tmp/ccKQwasl.s:227    .data:0000000000000000 .LANCHOR1
+     /tmp/ccKQwasl.s:234    .bss:0000000000000000 .LANCHOR0
+     /tmp/ccKQwasl.s:243    .text:0000000000000184 .L0 
+     /tmp/ccKQwasl.s:32     .text:0000000000000020 .L0 
+     /tmp/ccKQwasl.s:58     .text:0000000000000054 .L0 
+     /tmp/ccKQwasl.s:108    .text:00000000000000ac .L0 
+     /tmp/ccKQwasl.s:144    .text:00000000000000e0 .L0 
+     /tmp/ccKQwasl.s:201    .text:0000000000000154 .L0 
+     /tmp/ccKQwasl.s:27     .text:0000000000000018 .L2
+     /tmp/ccKQwasl.s:53     .text:000000000000004c .L3
+     /tmp/ccKQwasl.s:36     .text:0000000000000034 .L4
+     /tmp/ccKQwasl.s:103    .text:00000000000000a4 .L7
+     /tmp/ccKQwasl.s:121    .text:00000000000000c8 .L8
+     /tmp/ccKQwasl.s:185    .text:0000000000000140 .L15
+     /tmp/ccKQwasl.s:134    .text:00000000000000d4 .L10
+     /tmp/ccKQwasl.s:170    .text:0000000000000120 .L13
+     /tmp/ccKQwasl.s:196    .text:000000000000014c .L12
+     /tmp/ccKQwasl.s:129    .text:00000000000000d0 .L9
+     /tmp/ccKQwasl.s:512    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/ccKQwasl.s:901    .debug_str:0000000000000029 .LASF12
+     /tmp/ccKQwasl.s:919    .debug_str:0000000000000142 .LASF13
+     /tmp/ccKQwasl.s:921    .debug_str:0000000000000155 .LASF14
+     /tmp/ccKQwasl.s:5      .text:0000000000000000 .Ltext0
+     /tmp/ccKQwasl.s:240    .text:0000000000000184 .Letext0
+     /tmp/ccKQwasl.s:893    .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/ccKQwasl.s:913    .debug_str:0000000000000129 .LASF15
+GAS LISTING /tmp/ccKQwasl.s 			page 9
+
+
+     /tmp/ccKQwasl.s:899    .debug_str:0000000000000017 .LASF0
+     /tmp/ccKQwasl.s:903    .debug_str:00000000000000ed .LASF2
+     /tmp/ccKQwasl.s:923    .debug_str:0000000000000175 .LASF1
+     /tmp/ccKQwasl.s:909    .debug_str:000000000000011a .LASF3
+     /tmp/ccKQwasl.s:925    .debug_str:000000000000017a .LASF5
+     /tmp/ccKQwasl.s:897    .debug_str:0000000000000007 .LASF7
+     /tmp/ccKQwasl.s:81     .text:000000000000007c .LFB1
+     /tmp/ccKQwasl.s:221    .text:0000000000000184 .LFE1
+     /tmp/ccKQwasl.s:777    .debug_loc:0000000000000000 .LLST1
+     /tmp/ccKQwasl.s:915    .debug_str:0000000000000130 .LASF4
+     /tmp/ccKQwasl.s:791    .debug_loc:0000000000000039 .LLST2
+     /tmp/ccKQwasl.s:805    .debug_loc:0000000000000072 .LLST3
+     /tmp/ccKQwasl.s:819    .debug_loc:00000000000000ab .LLST4
+     /tmp/ccKQwasl.s:841    .debug_loc:000000000000010a .LLST5
+     /tmp/ccKQwasl.s:858    .debug_loc:0000000000000155 .LLST6
+     /tmp/ccKQwasl.s:110    .text:00000000000000bc .LVL9
+     /tmp/ccKQwasl.s:182    .text:000000000000013c .LVL19
+     /tmp/ccKQwasl.s:203    .text:0000000000000164 .LVL23
+     /tmp/ccKQwasl.s:917    .debug_str:0000000000000135 .LASF6
+     /tmp/ccKQwasl.s:907    .debug_str:0000000000000106 .LASF8
+     /tmp/ccKQwasl.s:10     .text:0000000000000000 .LFB0
+     /tmp/ccKQwasl.s:75     .text:000000000000007c .LFE0
+     /tmp/ccKQwasl.s:911    .debug_str:0000000000000122 .LASF9
+     /tmp/ccKQwasl.s:869    .debug_loc:000000000000018b .LLST0
+     /tmp/ccKQwasl.s:34     .text:0000000000000030 .LVL2
+     /tmp/ccKQwasl.s:46     .text:0000000000000044 .LVL3
+     /tmp/ccKQwasl.s:60     .text:0000000000000064 .LVL5
+     /tmp/ccKQwasl.s:905    .debug_str:00000000000000f8 .LASF10
+     /tmp/ccKQwasl.s:895    .debug_str:0000000000000000 .LASF11
+     /tmp/ccKQwasl.s:84     .text:000000000000007c .LVL7
+     /tmp/ccKQwasl.s:102    .text:00000000000000a4 .LVL8
+     /tmp/ccKQwasl.s:128    .text:00000000000000d0 .LVL12
+     /tmp/ccKQwasl.s:133    .text:00000000000000d4 .LVL13
+     /tmp/ccKQwasl.s:142    .text:00000000000000e0 .LVL14
+     /tmp/ccKQwasl.s:161    .text:000000000000010c .LVL16
+     /tmp/ccKQwasl.s:169    .text:0000000000000120 .LVL17
+     /tmp/ccKQwasl.s:174    .text:0000000000000124 .LVL18
+     /tmp/ccKQwasl.s:116    .text:00000000000000c0 .LVL10
+     /tmp/ccKQwasl.s:184    .text:0000000000000140 .LVL20
+     /tmp/ccKQwasl.s:195    .text:000000000000014c .LVL22
+     /tmp/ccKQwasl.s:125    .text:00000000000000cc .LVL11
+     /tmp/ccKQwasl.s:190    .text:0000000000000144 .LVL21
+     /tmp/ccKQwasl.s:14     .text:0000000000000000 .LVL0
+     /tmp/ccKQwasl.s:26     .text:0000000000000018 .LVL1
+     /tmp/ccKQwasl.s:70     .text:0000000000000074 .LVL6
+     /tmp/ccKQwasl.s:244    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+copy_and_swap
+__putc
