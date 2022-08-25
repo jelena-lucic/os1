@@ -21,7 +21,7 @@ private:
     thread_t myHandle;
 };
 
-/*class Semaphore {
+class Semaphore {
 public:
     Semaphore (unsigned init = 1);
     virtual ~Semaphore ();
@@ -29,6 +29,6 @@ public:
     int signal ();
 private:
     sem_t myHandle;
-};*/
+};
 
 #endif //SYSCALL_CPP_HPP

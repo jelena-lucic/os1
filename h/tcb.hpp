@@ -9,7 +9,7 @@
 class TCB
 {
 public:
-    enum State {CREATED, READY, RUNNING, FINISHED};
+    enum State {CREATED, READY, RUNNING, BLOCKED, FINISHED};
 
     ~TCB() { delete[] stack; }
 
@@ -23,9 +23,14 @@ public:
 
     using Arg = void*;
 
-    static TCB *createThread(Body body, Arg arg, uint64* stack);
+    static TCB* createThread(Body body, Arg arg, uint64* stack);
+
+    static TCB* initializeThread(Body body, Arg arg, uint64* stack);
 
     static TCB *running;
+
+    void *operator new(size_t size) { return __mem_alloc(size); }
+    void operator delete(void *ptr) { __mem_free(ptr); }
 
 private:
     TCB(Body body, Arg arg, uint64 *stack, uint64 timeSlice) :
@@ -37,7 +42,7 @@ private:
                     }),
             timeSlice(timeSlice)
     {
-        this->id = this->ID++;
+        this->id = ID++;
         this->state = CREATED;
     }
 
@@ -58,6 +63,7 @@ private:
     State state;
 
     friend class Riscv;
+    friend class _sem;
 
     static void threadWrapper();
 

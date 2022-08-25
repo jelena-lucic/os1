@@ -1,6 +1,8 @@
 #ifndef LIST_HPP
 #define LIST_HPP
 
+#include "../lib/mem.h"
+
 template<typename T>
 class List
 {
@@ -14,6 +16,9 @@ private:
     };
 
     Elem *head, *tail;
+
+    void *operator new(size_t size) { return __mem_alloc(size); }
+    void operator delete(void *ptr) { __mem_free(ptr); }
 
 public:
     List() : head(0), tail(0) {}

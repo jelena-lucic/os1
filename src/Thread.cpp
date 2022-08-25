@@ -8,11 +8,10 @@ void Thread::wrapper(void* thread) {
 
 Thread::Thread(void (*body)(void *), void *arg) {
     thread_create(&this->myHandle, body, arg);
-    thread_start(this->myHandle);
 }
 
 Thread::Thread() {
-    thread_create(&this->myHandle, Thread::wrapper, this);
+    thread_initialize(&this->myHandle, Thread::wrapper, this);
 }
 
 int Thread::start() {

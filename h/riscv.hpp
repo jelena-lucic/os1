@@ -98,8 +98,10 @@ public:
     //read a4
     static uint64 r_a4();
 
-    //write a3
+    //write a4
     static void w_a4(uint64 a4);
+
+    static void w_a0_stack(long a0);
 
     // supervisor trap
     static void supervisorTrap();
@@ -235,6 +237,10 @@ inline uint64 Riscv::r_a4() {
     uint64 volatile a4;
     __asm__ volatile ("ld %0, 14*8(fp)" : "=r"(a4));
     return a4;
+}
+
+inline void Riscv::w_a0_stack(long a0) {
+    __asm__ volatile ("sd %0, 10*8(fp)" : : "r"(a0));
 }
 
 #endif //RISCV_HPP

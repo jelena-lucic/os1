@@ -7,24 +7,27 @@ extern void userMain(void* arg);
 
 int main() {
 
-    printString("MAIN START\n");
     TCB::running = TCB::createThread(nullptr, nullptr, nullptr);
     TCB::running->start();
 
     Riscv::w_stvec((uint64) &Riscv::supervisorTrap);
     Riscv::ms_sstatus(Riscv::SSTATUS_SIE);
 
-    thread_t handle;
-    thread_create(&handle, userMain, nullptr);
-    thread_start(handle);
+    printString("MAIN START\n");
 
-    while(!handle->isFinished()) {
+    thread_t user;
+    thread_create(&user, userMain, nullptr);
+    thread_start(user);
+
+    while(!user->isFinished()) {
         thread_dispatch();
     } // join user main
 
-    delete handle;
+    delete user;
 
     printString("Finished\n");
+
+    delete TCB::running;
 
     return 0;
 }
